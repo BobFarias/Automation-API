@@ -7,6 +7,8 @@ import { AutomationModule } from './app/automation/automation.module';
 
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
+// Configure TypeORM with PostgreSQL
+// Necessary to facilitate the interaction between the API and the database using objects
 const CONFIG_DATABASE: PostgresConnectionOptions = {
   type: 'postgres',
   host: 'localhost',

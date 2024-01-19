@@ -49,7 +49,7 @@ describe('AutomationService', () => {
       .mockImplementation(() => DEFAULT_AUTOMATION);
     jest.spyOn(mockRepository, 'save').mockResolvedValue(DEFAULT_AUTOMATION);
 
-    expect(await service.create(DEFAULT_AUTOMATION)).toEqual(
+    expect(await service.createAutomation(DEFAULT_AUTOMATION)).toEqual(
       DEFAULT_AUTOMATION,
     );
     expect(mockRepository.create).toHaveBeenCalledWith(DEFAULT_AUTOMATION);

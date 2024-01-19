@@ -13,7 +13,9 @@ export class AutomationService {
   ) {}
 
   // Creating a new automation record
-  async create(createAutomationDto: IAutomationDTO): Promise<AutomationEntity> {
+  async createAutomation(
+    createAutomationDto: IAutomationDTO,
+  ): Promise<AutomationEntity> {
     // Taking the DTO, maps it to an entity, and saves it to the database
     const automation = this.automationRepository.create(createAutomationDto);
     return this.automationRepository.save(automation);
