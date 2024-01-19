@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { Repository } from 'typeorm';
 import { AutomationEntity } from '../automation.entity';
-import { IAutomationDTO } from './automation.dto';
+import { CreateAutomationDto } from './automation.dto';
 
 @Injectable()
 export class AutomationService {
@@ -14,7 +14,7 @@ export class AutomationService {
 
   // Creating a new automation record
   async createAutomation(
-    createAutomationDto: IAutomationDTO,
+    createAutomationDto: CreateAutomationDto,
   ): Promise<AutomationEntity> {
     // Taking the DTO, maps it to an entity, and saves it to the database
     const automation = this.automationRepository.create(createAutomationDto);
