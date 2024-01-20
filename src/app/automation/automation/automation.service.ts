@@ -13,7 +13,7 @@ export class AutomationService {
   ) {}
 
   // Creating a new automation record
-  async createAutomation(
+  async create(
     createAutomationDto: CreateAutomationDto,
   ): Promise<AutomationEntity> {
     // Taking the DTO, maps it to an entity, and saves it to the database
