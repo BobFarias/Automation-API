@@ -6,14 +6,7 @@ import { AutomationEntity } from '../automation.entity';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
-// Default automation to check if it the services will create the record
-const DEFAULT_AUTOMATION = {
-  automationId: 1,
-  name: 'Test Automation',
-  environmentId: 1,
-  criticalRatio: 0.5,
-  criticality: 0.3,
-};
+import { MOCK_AUTOMATION } from './automation.dto';
 
 describe('AutomationService', () => {
   let service: AutomationService;
@@ -43,20 +36,24 @@ describe('AutomationService', () => {
     );
   });
 
-  it('should create a new automation record', async () => {
-    jest
-      .spyOn(mockRepository, 'create')
-      .mockImplementation(() => DEFAULT_AUTOMATION);
-    jest.spyOn(mockRepository, 'save').mockResolvedValue(DEFAULT_AUTOMATION);
-
-    expect(await service.createAutomation(DEFAULT_AUTOMATION)).toEqual(
-      DEFAULT_AUTOMATION,
-    );
-    expect(mockRepository.create).toHaveBeenCalledWith(DEFAULT_AUTOMATION);
-    expect(mockRepository.save).toHaveBeenCalledWith(DEFAULT_AUTOMATION);
-  });
-
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  it('creating a new automation record', async () => {
+    // Simulating database interactions without actually hitting the database
+    // Calling the 'create' method and returing MOCK_AUTOMATION to simulate the creation of this entity
+    jest
+      .spyOn(mockRepository, 'create')
+      .mockImplementation(() => MOCK_AUTOMATION);
+    // Simulating the saving process
+    jest.spyOn(mockRepository, 'save').mockResolvedValue(MOCK_AUTOMATION);
+
+    // Expecting to have the output as the body used on the createAutomation service function.
+    expect(await service.create(MOCK_AUTOMATION)).toEqual(MOCK_AUTOMATION);
+
+    // Making sure that the create/save used the MOCK_AUTOMATION as body on their calls
+    expect(mockRepository.create).toHaveBeenCalledWith(MOCK_AUTOMATION);
+    expect(mockRepository.save).toHaveBeenCalledWith(MOCK_AUTOMATION);
   });
 });
