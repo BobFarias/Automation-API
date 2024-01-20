@@ -1,6 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
+// Default automation to check if it the services will create the record
+export const MOCK_AUTOMATION = {
+  automationId: 1,
+  name: 'Test Automation',
+  environmentId: 1,
+  criticalRatio: 0.5,
+  criticality: 0.3,
+};
+
 export interface IAutomationDTO {
   automationId: number;
   name: string;
