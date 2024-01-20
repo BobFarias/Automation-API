@@ -49,7 +49,7 @@ describe('AutomationController', () => {
   });
 
   it('should handle with errors related to the automation services functs', async () => {
-    const errorMessage = 'Bad request';
+    const errorMessage = 'Error creating automation';
 
     mockAutomationService.create.mockRejectedValue(new Error(errorMessage));
 
