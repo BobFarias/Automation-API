@@ -1,4 +1,10 @@
-import { Controller, Post, Body, BadRequestException } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { AutomationService } from './automation/automation.service';
@@ -20,10 +26,13 @@ export class AutomationController {
   async createAutomation(
     @Body() body: CreateAutomationDto,
   ): Promise<AutomationEntity> {
-    const result = await this.automationService.createAutomation(body);
-    if (!result) {
-      throw new BadRequestException('Invalid input data');
+    try {
+      return await this.automationService.create(body);
+    } catch (error) {
+      throw new HttpException(
+        'Error creating automation',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
-    return result;
   }
 }
