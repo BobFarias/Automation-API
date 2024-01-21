@@ -56,4 +56,52 @@ describe('AutomationService', () => {
     expect(mockRepository.create).toHaveBeenCalledWith(MOCK_AUTOMATION);
     expect(mockRepository.save).toHaveBeenCalledWith(MOCK_AUTOMATION);
   });
+
+  it('should delete an automation record', async () => {
+    // Mocking the ID that will be used on this test
+    const automationId = 1;
+
+    // Mocking the delete function
+    jest
+      .spyOn(mockRepository, 'delete')
+      .mockResolvedValue({ affected: 1, raw: {} });
+
+    // Calling the delete function from the service
+    // Checking that it did not resolve by throwing an error
+    await expect(service.delete(automationId)).resolves.not.toThrow();
+
+    // Testing with the correct ID has been called on the delete function
+    expect(mockRepository.delete).toHaveBeenCalledWith(automationId);
+  });
+
+  it('should update an automation record with a new critical ratio', async () => {
+    // Mocking values that will be used for the test
+    const automationId = 1;
+    const newCriticalRatio = 1.5;
+    const updatedAutomation = {
+      ...MOCK_AUTOMATION,
+      criticalRatio: newCriticalRatio,
+    };
+
+    // Mocking finding the automation and saving an updated version with a new critical ratio value
+    jest.spyOn(mockRepository, 'findOne').mockResolvedValue(MOCK_AUTOMATION);
+    jest.spyOn(mockRepository, 'save').mockResolvedValue(updatedAutomation);
+
+    // Calling the update function from the service file
+    const result = await service.updateCriticalRatio(
+      automationId,
+      newCriticalRatio,
+    );
+
+    // Checking if the automation has the new critical ratio value
+    expect(result.criticalRatio).toBe(newCriticalRatio);
+
+    // Checking if the correct ID was called to be updated
+    expect(mockRepository.findOne).toHaveBeenCalledWith({
+      where: { id: automationId },
+    });
+
+    // Making sure that the updated automation saved
+    expect(mockRepository.save).toHaveBeenCalledWith(updatedAutomation);
+  });
 });

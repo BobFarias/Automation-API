@@ -53,3 +53,14 @@ export class CreateAutomationDto {
   })
   criticality: number;
 }
+
+export class UpdateCriticalRatioDto {
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty({
+    example: 1,
+    description:
+      'Please provide the new critical ratio value (float number) that will be used to update.',
+  })
+  newCriticalRatio: number;
+}

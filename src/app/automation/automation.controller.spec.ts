@@ -60,4 +60,55 @@ describe('AutomationController', () => {
       errorMessage,
     );
   });
+
+  it('should delete an automation', async () => {
+    // Receiving a string due to the path used on the api request
+    const automationId = '1';
+    // Setting up the service to delete an automation
+    mockAutomationService.delete.mockResolvedValue();
+
+    // Making the request using the deleteAutomation controller function
+    // Expecting not throw any error
+    await expect(
+      controller.deleteAutomation(automationId),
+    ).resolves.not.toThrow();
+
+    // Expecting to have the automation ID called on the delete function in service file
+    // Converting the string to a number
+    expect(mockAutomationService.delete).toHaveBeenCalledWith(
+      Number(automationId),
+    );
+  });
+
+  it('should update the critical ratio of a specific automation', async () => {
+    // Mocking values that will be used for the test
+    // Getting the ID as a string because of the PATH from the api request
+    const automationId = '1';
+    // Matching the MockData with the UpdateCriticalRatioDto
+    const newCriticalRatio = { newCriticalRatio: 1.5 };
+    const updatedAutomation = {
+      ...MOCK_AUTOMATION,
+      criticalRatio: Number(newCriticalRatio.newCriticalRatio),
+    };
+
+    // Setting up the service to update an automation
+    mockAutomationService.updateCriticalRatio.mockResolvedValue(
+      updatedAutomation,
+    );
+
+    // Making the request using the updateAutomation controller function
+    const result = await controller.updateAutomationCriticalRatio(
+      automationId,
+      newCriticalRatio,
+    );
+
+    // The result from the previous request needs to be the same of the const "updatedAutomation"
+    expect(result).toEqual(updatedAutomation);
+
+    // Making sure that the automation ID and the new critical ration have been called
+    expect(mockAutomationService.updateCriticalRatio).toHaveBeenCalledWith(
+      Number(automationId),
+      updatedAutomation.criticalRatio,
+    );
+  });
 });
