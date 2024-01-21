@@ -5,8 +5,9 @@ import {
   Controller,
   HttpStatus,
   HttpException,
+  Delete,
 } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { AutomationService } from './automation/automation.service';
 import {
@@ -15,6 +16,8 @@ import {
   MOCK_AUTOMATION,
 } from './automation/automation.dto';
 import { AutomationEntity } from './automation.entity';
+
+import { IdValidation } from 'src/common/decorators/id-validation.param.decorator';
 
 @ApiTags('automations')
 @Controller('automation')
@@ -27,7 +30,7 @@ export class AutomationController {
     status: 201,
     description: 'The automation has been successfully created.',
   })
-  @ApiResponse({ status: 400, description: 'Bad request.' })
+  @ApiResponse({ status: 400, description: 'Error creating automation.' })
   async createAutomation(
     @Body() body: CreateAutomationDto,
   ): Promise<AutomationEntity> {
@@ -42,8 +45,26 @@ export class AutomationController {
   }
 
   // HTTP Request to delete an automation
-  async deleteAutomation(@Param('id') automationId: string): Promise<void> {
-    return;
+  // Promise of a string with a sucessful message or a void throwing an error
+  // Using a specific Decorator to handle the validation of the ID received as a parameter
+  @Delete('/delete/:id')
+  @ApiOperation({ summary: 'Delete a specific automation' })
+  @ApiParam({
+    name: 'id',
+    type: String,
+    description: 'The ID of the automation',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'The automation has been successfully deleted.',
+  })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  async deleteAutomation(
+    @IdValidation('id') automationId: string,
+  ): Promise<void | { message: string }> {
+    // Checking if automationId is a valid number
+    const id = Number(automationId);
+    return await this.automationService.delete(id);
   }
 
   // HTTP Request to update a critical Ratio based on specific ID

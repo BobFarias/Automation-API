@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Repository } from 'typeorm';
@@ -22,11 +22,25 @@ export class AutomationService {
   }
 
   // Deleting a specific automation record
-  async delete(automationId: number): Promise<void> {
-    return;
+  async delete(automationId: number): Promise<void | { message: string }> {
+    // Deleting the automation with the valid ID received
+    const result = await this.automationRepository.delete(automationId);
+
+    // Checking if any data was affected by the delete function
+    // Throwing an error if nothing was found with the ID requested
+    if (result.affected === 0) {
+      throw new NotFoundException(
+        `Automation with ID ${automationId} not found`,
+      );
+    }
+
+    // Returning a sucessful message if the data was deleted
+    return {
+      message: `Automation with ID ${automationId} successfully deleted`,
+    };
   }
 
-  // Updating the critical ratio of a specific automation
+  // Updating the critical ratio of a specific
   async updateCriticalRatio(
     automationId: number,
     criticalRatio: number,
