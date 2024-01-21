@@ -55,7 +55,8 @@ describe('AutomationService', () => {
     jest.spyOn(mockRepository, 'find').mockResolvedValue(mockListAutomations);
 
     // Calling the service funtion findAll with asc as parameter
-    const resultAsc = await service.findAll();
+    // No query parameters are provided in the request, query will be an empty object ({})
+    const resultAsc = await service.findAll({});
 
     // Expecting to get the same result as the mockListAutomations
     expect(resultAsc).toEqual(mockListAutomations);
@@ -73,7 +74,9 @@ describe('AutomationService', () => {
     jest.spyOn(mockRepository, 'find').mockResolvedValue(mockListAutomations);
 
     // Calling the service funtion findAll with asc as parameter
-    const resultAsc = await service.findAll('asc');
+    const resultAsc = await service.findAll({
+      sort: 'asc',
+    });
 
     // Expecting to get the same result as the mockListAutomations
     expect(resultAsc).toEqual(mockListAutomations);
@@ -98,7 +101,7 @@ describe('AutomationService', () => {
     jest.spyOn(mockRepository, 'find').mockResolvedValue(mockListAutomations);
 
     // Calling the service funtion findAll with asc as parameter
-    const resultAsc = await service.findAll('desc');
+    const resultAsc = await service.findAll({ sort: 'desc' });
 
     // Expecting to get the same result as the mockListAutomations
     expect(resultAsc).toEqual(mockListAutomations);

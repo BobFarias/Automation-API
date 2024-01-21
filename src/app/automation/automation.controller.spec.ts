@@ -38,7 +38,7 @@ describe('AutomationController', () => {
     expect(mockAutomationService).toBeDefined();
   });
 
-  it('should return an array of all the automations without any sorting', async () => {
+  it('should return an array of all the automations without any sorting or filter', async () => {
     const mockListAutomations = [
       { ...MOCK_AUTOMATION },
       { ...MOCK_AUTOMATION, idAutomation: 2 },
@@ -49,10 +49,29 @@ describe('AutomationController', () => {
     mockAutomationService.findAll.mockResolvedValue(mockListAutomations);
 
     // Making the request with controller functions (findAll)
+    // no query parameters are provided in the request, query will be an empty object ({})
     const resultAscOrded = await controller.findAll();
 
     // Checking if the result is the same of the mock results
     expect(resultAscOrded).toEqual(mockListAutomations);
+  });
+
+  it('should return automations filtered by environmentId', async () => {
+    const listAutomationsSameEnvId = [
+      { ...MOCK_AUTOMATION, automationId: 1, environmentId: 5 },
+      { ...MOCK_AUTOMATION, automationId: 2, environmentId: 5 },
+      { ...MOCK_AUTOMATION, automationId: 3, environmentId: 5 },
+      { ...MOCK_AUTOMATION, automationId: 4, environmentId: 5 },
+    ];
+    mockAutomationService.findAll.mockResolvedValue(listAutomationsSameEnvId);
+
+    const queryOptions = { environmentId: 5 };
+    const result = await controller.findAll(queryOptions);
+
+    // Expecting the result need to be equal to the listAutomationsSameEnvId.
+    expect(result).toEqual(listAutomationsSameEnvId);
+    // Making sure that the filter with a specific env number have been called
+    expect(mockAutomationService.findAll).toHaveBeenCalledWith(queryOptions);
   });
 
   it('should return an array of all the automations in asc order', async () => {
@@ -72,7 +91,7 @@ describe('AutomationController', () => {
     expect(resultAscOrded).toEqual(mockListAutomations);
 
     // Checking if the sort asc have been used previously
-    expect(mockAutomationService.findAll).toHaveBeenCalledWith('asc');
+    expect(mockAutomationService.findAll).toHaveBeenCalledWith({ sort: 'asc' });
   });
 
   it('should return an array of all the automations in desc order', async () => {
@@ -92,7 +111,9 @@ describe('AutomationController', () => {
     expect(resultAscOrded).toEqual(mockListAutomations);
 
     // Checking if the sort desc have been used previously
-    expect(mockAutomationService.findAll).toHaveBeenCalledWith('desc');
+    expect(mockAutomationService.findAll).toHaveBeenCalledWith({
+      sort: 'desc',
+    });
   });
 
   it('should create an automation and return it', async () => {
