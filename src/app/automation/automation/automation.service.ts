@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { Repository } from 'typeorm';
 import { AutomationEntity } from '../automation.entity';
-import { CreateAutomationDto, MOCK_AUTOMATION } from './automation.dto';
+import { CreateAutomationDto } from './automation.dto';
 
 @Injectable()
 export class AutomationService {
@@ -45,6 +45,22 @@ export class AutomationService {
     automationId: number,
     criticalRatio: number,
   ): Promise<AutomationEntity> {
-    return MOCK_AUTOMATION;
+    // Finding the automation with the specific ID provided
+    const automation = await this.automationRepository.findOne({
+      where: { automationId: automationId },
+    });
+
+    // Throwing an error if there is no data with a valid ID value
+    if (!automation) {
+      throw new NotFoundException(
+        `Automation with ID ${automationId} not found`,
+      );
+    }
+
+    // Updating the automation data
+    automation.criticalRatio = criticalRatio;
+
+    // Saving the new updated automation
+    return this.automationRepository.save(automation);
   }
 }

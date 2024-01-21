@@ -1,11 +1,11 @@
 import {
   Post,
   Body,
-  Param,
   Controller,
   HttpStatus,
   HttpException,
   Delete,
+  Put,
 } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
@@ -13,7 +13,6 @@ import { AutomationService } from './automation/automation.service';
 import {
   CreateAutomationDto,
   UpdateCriticalRatioDto,
-  MOCK_AUTOMATION,
 } from './automation/automation.dto';
 import { AutomationEntity } from './automation.entity';
 
@@ -68,15 +67,28 @@ export class AutomationController {
   }
 
   // HTTP Request to update a critical Ratio based on specific ID
+  @Put('/update/critical-ratio/:id')
+  @ApiOperation({
+    summary: 'Update the critical ratio of a specific automation',
+  })
+  @ApiParam({
+    name: 'id',
+    type: String,
+    description: 'The ID of the automation',
+  })
+  @ApiResponse({ status: 400, description: 'Bad request' })
   async updateAutomationCriticalRatio(
-    @Param('id') automationId: string,
+    @IdValidation('id') automationId: string,
     @Body() updateDto: UpdateCriticalRatioDto,
   ): Promise<AutomationEntity> {
     try {
-      return MOCK_AUTOMATION;
+      return this.automationService.updateCriticalRatio(
+        Number(automationId),
+        updateDto.newCriticalRatio,
+      );
     } catch (error) {
       throw new HttpException(
-        'Error creating automation',
+        'Error updating automation',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
