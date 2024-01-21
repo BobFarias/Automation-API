@@ -36,8 +36,10 @@ describe('AutomationController', () => {
   });
 
   it('should create an automation and return it', async () => {
+    // Setting up the service to return a mocked value
     mockAutomationService.create.mockResolvedValue(MOCK_AUTOMATION);
 
+    // Making the request with controller functions (createAutomation)
     const createAutomationResponse = await controller.createAutomation(
       MOCK_AUTOMATION,
     );
@@ -48,6 +50,7 @@ describe('AutomationController', () => {
     expect(createAutomationResponse).toEqual(MOCK_AUTOMATION);
   });
 
+  // Testing the erros with the service's functions
   it('should handle with errors related to the automation services functs', async () => {
     const errorMessage = 'Error creating automation';
 
