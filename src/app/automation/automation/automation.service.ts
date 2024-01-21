@@ -12,8 +12,17 @@ export class AutomationService {
     private automationRepository: Repository<AutomationEntity>,
   ) {}
 
-  async findAll(sort: 'asc' | 'desc'): Promise<AutomationEntity[] | null> {
-    return null;
+  async findAll(sort?: 'asc' | 'desc'): Promise<AutomationEntity[] | null> {
+    let formattedSort: 'ASC' | 'DESC';
+
+    // Formatting to the correct sorting
+    if (sort === 'asc' || sort === null || sort === undefined)
+      formattedSort = 'ASC';
+    if (sort === 'desc') formattedSort = 'DESC';
+
+    return this.automationRepository.find({
+      order: { automationId: formattedSort },
+    });
   }
 
   // Creating a new automation record
