@@ -55,6 +55,24 @@ describe('AutomationService', () => {
     jest.spyOn(mockRepository, 'find').mockResolvedValue(mockListAutomations);
 
     // Calling the service funtion findAll with asc as parameter
+    const resultAsc = await service.findAll();
+
+    // Expecting to get the same result as the mockListAutomations
+    expect(resultAsc).toEqual(mockListAutomations);
+  });
+
+  it('should return an array of automations in asc ordering', async () => {
+    // Mocking the final result of a automations lists asc order
+    const mockListAutomations = [
+      { ...MOCK_AUTOMATION },
+      { ...MOCK_AUTOMATION, idAutomation: 2 },
+      { ...MOCK_AUTOMATION, idAutomation: 3 },
+    ];
+
+    // Mocking the final result
+    jest.spyOn(mockRepository, 'find').mockResolvedValue(mockListAutomations);
+
+    // Calling the service funtion findAll with asc as parameter
     const resultAsc = await service.findAll('asc');
 
     // Expecting to get the same result as the mockListAutomations
@@ -62,7 +80,9 @@ describe('AutomationService', () => {
 
     // Making sure that the sort: ASC have been called
     expect(mockRepository.find).toHaveBeenCalledWith({
-      sort: 'ASC',
+      order: {
+        automationId: 'ASC',
+      },
     });
   });
 
@@ -83,9 +103,11 @@ describe('AutomationService', () => {
     // Expecting to get the same result as the mockListAutomations
     expect(resultAsc).toEqual(mockListAutomations);
 
-    // Making sure that the sort: ASC have been called
+    // Making sure that the sort: DESC have been called
     expect(mockRepository.find).toHaveBeenCalledWith({
-      sort: 'DESC',
+      order: {
+        automationId: 'DESC',
+      },
     });
   });
 
