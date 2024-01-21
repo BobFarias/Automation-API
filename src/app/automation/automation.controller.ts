@@ -16,7 +16,7 @@ import {
 } from './automation/automation.dto';
 import { AutomationEntity } from './automation.entity';
 
-import { IdValidation } from 'src/common/decorators/id-validation.param.decorator';
+import { IdValidation } from '../../common/decorators/id-validation.param.decorator';
 
 @ApiTags('automations')
 @Controller('automation')

@@ -14,6 +14,8 @@ describe('AutomationController', () => {
 
     mockAutomationService = {
       create: jest.fn(),
+      delete: jest.fn(),
+      updateCriticalRatio: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({

@@ -22,8 +22,11 @@ describe('AutomationService', () => {
           provide: getRepositoryToken(AutomationEntity),
           useValue: {
             // Mock implementation of the repository methods.
+            find: jest.fn(),
+            findOne: jest.fn(),
             create: jest.fn(),
             save: jest.fn(),
+            delete: jest.fn(),
           },
         },
       ],
@@ -98,7 +101,7 @@ describe('AutomationService', () => {
 
     // Checking if the correct ID was called to be updated
     expect(mockRepository.findOne).toHaveBeenCalledWith({
-      where: { id: automationId },
+      where: { automationId: automationId },
     });
 
     // Making sure that the updated automation saved
