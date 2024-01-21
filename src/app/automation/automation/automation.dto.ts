@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import {
+  IsIn,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 // Default automation to check if it the services will create the record
 export const MOCK_AUTOMATION = {
@@ -65,6 +71,23 @@ export class UpdateCriticalRatioDto {
   newCriticalRatio: number;
 }
 
-export class SortOptions {
-  sort: 'asc' | 'desc';
+export class QueryOptions {
+  @IsString()
+  @IsIn(['asc', 'desc'])
+  @IsOptional()
+  @ApiProperty({
+    enum: ['asc', 'desc'],
+    required: false,
+    description: 'Sort order',
+  })
+  sort?: string;
+
+  @IsNumber()
+  @IsOptional()
+  @ApiProperty({
+    type: Number,
+    required: false,
+    description: 'Filter by automation environment ID',
+  })
+  environmentId?: number;
 }

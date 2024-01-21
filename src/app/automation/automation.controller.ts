@@ -9,18 +9,13 @@ import {
   Controller,
   HttpException,
 } from '@nestjs/common';
-import {
-  ApiOperation,
-  ApiParam,
-  ApiResponse,
-  ApiTags,
-  ApiQuery,
-} from '@nestjs/swagger';
+
+import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { AutomationService } from './automation/automation.service';
 import {
   CreateAutomationDto,
-  SortOptions,
+  QueryOptions,
   UpdateCriticalRatioDto,
 } from './automation/automation.dto';
 import { AutomationEntity } from './automation.entity';
@@ -34,19 +29,13 @@ export class AutomationController {
 
   @Get()
   @ApiOperation({ summary: 'Get all the automations. Queries could be used.' })
-  @ApiQuery({
-    name: 'sort',
-    enum: ['asc', 'desc'],
-    required: false,
-    description: 'Sort order',
-  })
   @ApiResponse({
     status: 200,
     description: 'List of automations available.',
   })
   @ApiResponse({ status: 400, description: 'Error fetching the automations.' })
-  async findAll(@Query() query?: SortOptions): Promise<AutomationEntity[]> {
-    return await this.automationService.findAll(query?.sort);
+  async findAll(@Query() query?: QueryOptions): Promise<AutomationEntity[]> {
+    return await this.automationService.findAll(query);
   }
 
   @Post('/create')

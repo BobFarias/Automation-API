@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { Repository } from 'typeorm';
 import { AutomationEntity } from '../automation.entity';
-import { CreateAutomationDto } from './automation.dto';
+import { CreateAutomationDto, QueryOptions } from './automation.dto';
 
 @Injectable()
 export class AutomationService {
@@ -12,7 +12,8 @@ export class AutomationService {
     private automationRepository: Repository<AutomationEntity>,
   ) {}
 
-  async findAll(sort?: 'asc' | 'desc'): Promise<AutomationEntity[] | null> {
+  async findAll(queries?: QueryOptions): Promise<AutomationEntity[] | null> {
+    const { sort, environmentId } = queries;
     let formattedSort: 'ASC' | 'DESC';
 
     // Formatting to the correct sorting
