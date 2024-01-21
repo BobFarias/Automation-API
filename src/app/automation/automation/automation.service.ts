@@ -12,6 +12,10 @@ export class AutomationService {
     private automationRepository: Repository<AutomationEntity>,
   ) {}
 
+  async findAll(sort: 'asc' | 'desc'): Promise<AutomationEntity[] | null> {
+    return null;
+  }
+
   // Creating a new automation record
   async create(
     createAutomationDto: CreateAutomationDto,

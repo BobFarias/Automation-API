@@ -1,17 +1,20 @@
 import {
-  Post,
-  Body,
-  Controller,
-  HttpStatus,
-  HttpException,
-  Delete,
+  Get,
   Put,
+  Body,
+  Post,
+  Query,
+  Delete,
+  HttpStatus,
+  Controller,
+  HttpException,
 } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { AutomationService } from './automation/automation.service';
 import {
   CreateAutomationDto,
+  SortOptions,
   UpdateCriticalRatioDto,
 } from './automation/automation.dto';
 import { AutomationEntity } from './automation.entity';
@@ -22,6 +25,19 @@ import { IdValidation } from '../../common/decorators/id-validation.param.decora
 @Controller('automation')
 export class AutomationController {
   constructor(private automationService: AutomationService) {}
+
+  @Get('/all-automations')
+  @ApiOperation({ summary: 'Get all the automations. Queries could be used.' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of automations available.',
+  })
+  @ApiResponse({ status: 400, description: 'Error fetching the automations.' })
+  async findAll(
+    @Query() query: SortOptions,
+  ): Promise<AutomationEntity[] | null> {
+    return null;
+  }
 
   @Post('/create')
   @ApiOperation({ summary: 'Create a new automation' })

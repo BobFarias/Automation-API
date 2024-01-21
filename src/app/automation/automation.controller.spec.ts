@@ -16,6 +16,7 @@ describe('AutomationController', () => {
       create: jest.fn(),
       delete: jest.fn(),
       updateCriticalRatio: jest.fn(),
+      findAll: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -37,8 +38,50 @@ describe('AutomationController', () => {
     expect(mockAutomationService).toBeDefined();
   });
 
+  it('should return an array of all the automations in asc order', async () => {
+    const mockListAutomations = [
+      { ...MOCK_AUTOMATION },
+      { ...MOCK_AUTOMATION, idAutomation: 2 },
+      { ...MOCK_AUTOMATION, idAutomation: 3 },
+    ];
+
+    // Setting up the service to return mocked value (find all function)
+    mockAutomationService.findAll.mockResolvedValue(mockListAutomations);
+
+    // Making the request with controller functions (findAll)
+    const resultAscOrded = await controller.findAll({ sort: 'asc' });
+
+    // Checking if the result is the same of the mock results
+    expect(resultAscOrded).toEqual(mockListAutomations);
+
+    // Checking if the sort asc have been used previously
+    expect(mockAutomationService.findAll).toHaveBeenCalledWith({ sort: 'asc' });
+  });
+
+  it('should return an array of all the automations in desc order', async () => {
+    const mockListAutomations = [
+      { ...MOCK_AUTOMATION, idAutomation: 3 },
+      { ...MOCK_AUTOMATION, idAutomation: 2 },
+      { ...MOCK_AUTOMATION },
+    ];
+
+    // Setting up the service to return mocked value (find all function)
+    mockAutomationService.findAll.mockResolvedValue(mockListAutomations);
+
+    // Making the request with controller functions (findAll)
+    const resultAscOrded = await controller.findAll({ sort: 'desc' });
+
+    // Checking if the result is the same of the mock results
+    expect(resultAscOrded).toEqual(mockListAutomations);
+
+    // Checking if the sort asc have been used previously
+    expect(mockAutomationService.findAll).toHaveBeenCalledWith({
+      sort: 'desc',
+    });
+  });
+
   it('should create an automation and return it', async () => {
-    // Setting up the service to return a mocked value
+    // Setting up the service to return a mocked value (create function)
     mockAutomationService.create.mockResolvedValue(MOCK_AUTOMATION);
 
     // Making the request with controller functions (createAutomation)
@@ -66,7 +109,7 @@ describe('AutomationController', () => {
   it('should delete an automation', async () => {
     // Receiving a string due to the path used on the api request
     const automationId = '1';
-    // Setting up the service to delete an automation
+    // Setting up the service to delete an automation (delete function)
     mockAutomationService.delete.mockResolvedValue();
 
     // Making the request using the deleteAutomation controller function

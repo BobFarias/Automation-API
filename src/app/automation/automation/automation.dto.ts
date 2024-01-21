@@ -64,3 +64,7 @@ export class UpdateCriticalRatioDto {
   })
   newCriticalRatio: number;
 }
+
+export class SortOptions {
+  sort: 'asc' | 'desc';
+}

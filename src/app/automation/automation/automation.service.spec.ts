@@ -43,7 +43,53 @@ describe('AutomationService', () => {
     expect(service).toBeDefined();
   });
 
-  it('creating a new automation record', async () => {
+  it('should return an array of automations in asc ordering', async () => {
+    // Mocking the final result of a automations lists asc order
+    const mockListAutomations = [
+      { ...MOCK_AUTOMATION },
+      { ...MOCK_AUTOMATION, idAutomation: 2 },
+      { ...MOCK_AUTOMATION, idAutomation: 3 },
+    ];
+
+    // Mocking the final result
+    jest.spyOn(mockRepository, 'find').mockResolvedValue(mockListAutomations);
+
+    // Calling the service funtion findAll with asc as parameter
+    const resultAsc = await service.findAll('asc');
+
+    // Expecting to get the same result as the mockListAutomations
+    expect(resultAsc).toEqual(mockListAutomations);
+
+    // Making sure that the sort: ASC have been called
+    expect(mockRepository.find).toHaveBeenCalledWith({
+      sort: 'ASC',
+    });
+  });
+
+  it('should return an array of automations in desc ordering', async () => {
+    // Mocking the final result of a automations lists asc order
+    const mockListAutomations = [
+      { ...MOCK_AUTOMATION, idAutomation: 3 },
+      { ...MOCK_AUTOMATION, idAutomation: 2 },
+      { ...MOCK_AUTOMATION },
+    ];
+
+    // Mocking the final result
+    jest.spyOn(mockRepository, 'find').mockResolvedValue(mockListAutomations);
+
+    // Calling the service funtion findAll with asc as parameter
+    const resultAsc = await service.findAll('desc');
+
+    // Expecting to get the same result as the mockListAutomations
+    expect(resultAsc).toEqual(mockListAutomations);
+
+    // Making sure that the sort: ASC have been called
+    expect(mockRepository.find).toHaveBeenCalledWith({
+      sort: 'DESC',
+    });
+  });
+
+  it('should create a new automation record', async () => {
     // Simulating database interactions without actually hitting the database
     // Calling the 'create' method and returing MOCK_AUTOMATION to simulate the creation of this entity
     jest
