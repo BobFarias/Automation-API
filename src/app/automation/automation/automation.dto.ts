@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsIn,
@@ -84,6 +85,8 @@ export class QueryOptions {
 
   @IsNumber()
   @IsOptional()
+  // Used to parseInt the number received from the query
+  @Transform(({ value }) => parseInt(value, 10))
   @ApiProperty({
     type: Number,
     required: false,
