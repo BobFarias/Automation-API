@@ -12,18 +12,27 @@ export class AutomationService {
     private automationRepository: Repository<AutomationEntity>,
   ) {}
 
-  async findAll(queries?: QueryOptions): Promise<AutomationEntity[] | null> {
-    const { sort, environmentId } = queries;
-    let formattedSort: 'ASC' | 'DESC';
+  async findAll(queries?: QueryOptions): Promise<AutomationEntity[]> {
+    let filterOptions = {};
 
-    // Formatting to the correct sorting
-    if (sort === 'asc' || sort === null || sort === undefined)
-      formattedSort = 'ASC';
-    if (sort === 'desc') formattedSort = 'DESC';
+    // Checking if the user selected a query on the request
+    if (queries) {
+      // Checking if the sort was selected or not and creating an order object with the user choice
+      if (queries.sort) {
+        filterOptions = { order: { automationId: queries.sort.toUpperCase() } };
+      }
+      // Checking if the environment ID was used and coping the previous the order config and implementing the
+      // new filter related to find all the environmentId
+      if (queries.environmentId) {
+        filterOptions = {
+          ...filterOptions,
+          where: { environmentId: queries.environmentId },
+        };
+      }
+    }
 
-    return this.automationRepository.find({
-      order: { automationId: formattedSort },
-    });
+    // Returning the results with or without filters
+    return this.automationRepository.find(filterOptions);
   }
 
   // Creating a new automation record
