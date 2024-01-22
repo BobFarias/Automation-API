@@ -27,6 +27,7 @@ import { IdValidation } from '../../common/decorators/id-validation.param.decora
 export class AutomationController {
   constructor(private automationService: AutomationService) {}
 
+  // HTTP Request to GET an list of automations based on order and env ID
   @Get()
   @ApiOperation({ summary: 'Get all the automations. Queries could be used.' })
   @ApiResponse({
@@ -35,6 +36,8 @@ export class AutomationController {
   })
   @ApiResponse({ status: 400, description: 'Error fetching the automations.' })
   async findAll(@Query() query?: QueryOptions): Promise<AutomationEntity[]> {
+    // if the user does not choice any query, it will return an empty object
+    // Validation of this empty object will be done on the service side
     return await this.automationService.findAll(query);
   }
 
