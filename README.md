@@ -6,6 +6,18 @@
 
 This project is built using the [Nest](https://github.com/nestjs/nest) framework with TypeScript, tailored for a specific code challenge. It demonstrates an efficient and scalable approach to building server-side applications, focusing on creating and managing 'Automations'.
 
+## Table of Contents
+- [Project Description](#project-description)
+- [Installation](#installation)
+- [Running the App](#running-the-app)
+- ...
+- [Swagger API Documentation](#swagger-api-documentation)
+- [Code Challenge Overview](#code-challenge-overview)
+- [Important Configuration Notes](#important-configuration-notes)
+- [How to Use](#how-to-use)
+- [Contributions and Feedback](#contributions-and-feedback)
+- [License](#license)
+
 ### Key Features
 
 - **CRUD Operations**: Create, Read, Update, and Delete functionalities for 'Automations'.
@@ -115,3 +127,7 @@ Ensure that the test database (automation-api-test) exists and the credentials a
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+## Contributions and Feedback
+If you have suggestions or want to contribute to this project, please feel free to open an issue or pull request in the repository.
+
