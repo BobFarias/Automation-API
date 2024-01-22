@@ -45,6 +45,19 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Swagger API Documentation
+
+This project is configured with Swagger to provide interactive API documentation. Swagger offers a convenient way to explore and test the various endpoints of the application.
+
+# How to Access the Swagger UI
+
+Once the application is running, you can access the Swagger UI by navigating to the following URL in your web browser:
+
+```bash
+$ http://localhost:3000/api
+```
+Replace 3000 with the appropriate port number if your application runs on a different port.
+
 ## Code Challenge Overview
 
 This application was developed as part of a code challenge, which required the implementation of a RESTful API for managing 'Automations'. The challenge emphasized CRUD operations, database integration, and testing.
