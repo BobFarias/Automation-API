@@ -43,7 +43,32 @@ describe('AutomationService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should return an array of automations in asc ordering', async () => {
+  it('should return automations filtered by environmentId', async () => {
+    // Mocking the final result of a automations lists asc order with a specific environment Id
+    const listAutomationsSameEnvId = [
+      { ...MOCK_AUTOMATION, automationId: 1, environmentId: 5 },
+      { ...MOCK_AUTOMATION, automationId: 2, environmentId: 5 },
+      { ...MOCK_AUTOMATION, automationId: 3, environmentId: 5 },
+      { ...MOCK_AUTOMATION, automationId: 4, environmentId: 5 },
+    ];
+
+    // Mocking the final result
+    jest
+      .spyOn(mockRepository, 'find')
+      .mockResolvedValue(listAutomationsSameEnvId);
+
+    // Using a specific number of enviroment
+    const queryOptions = { environmentId: 5 };
+    const result = await service.findAll(queryOptions);
+
+    // Expecting the result needed to be equal to listAutomationsSameEnvId
+    expect(result).toEqual(listAutomationsSameEnvId);
+    expect(mockRepository.find).toHaveBeenCalledWith({
+      where: { environmentId: 5 },
+    });
+  });
+
+  it('should return an array of automations without any filter', async () => {
     // Mocking the final result of a automations lists asc order
     const mockListAutomations = [
       { ...MOCK_AUTOMATION },
