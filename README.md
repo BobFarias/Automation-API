@@ -64,7 +64,7 @@ This application was developed as part of a code challenge, which required the i
 
 ## Important Configuration Notes
 
-# Application Database Configuration
+### Application Database Configuration
 
 In app.module.ts, the database configuration is set for the main application. It's crucial to adjust these settings according to your development environment:
 
@@ -83,7 +83,7 @@ In app.module.ts, the database configuration is set for the main application. It
 
 Remember to replace 'your_password' with your actual PostgreSQL password.
 
-# Testing Database Configuration
+### Testing Database Configuration
 
 For end-to-end (E2E) tests, a separate database configuration is used to avoid interfering with the main application data. This configuration is located in automation.e2e-spec.ts:
 
