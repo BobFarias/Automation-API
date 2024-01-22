@@ -2,29 +2,16 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Project Description
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This project is built using the [Nest](https://github.com/nestjs/nest) framework with TypeScript, tailored for a specific code challenge. It demonstrates an efficient and scalable approach to building server-side applications, focusing on creating and managing 'Automations'.
 
-## Description
+### Key Features
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **CRUD Operations**: Create, Read, Update, and Delete functionalities for 'Automations'.
+- **Data Validation**: Robust validation for incoming data using class validators.
+- **Database Integration**: Uses PostgreSQL for data persistence.
+- **Testing**: Includes both unit tests and end-to-end (E2E) tests.
 
 ## Installation
 
@@ -58,15 +45,60 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
+## Code Challenge Overview
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+This application was developed as part of a code challenge, which required the implementation of a RESTful API for managing 'Automations'. The challenge emphasized CRUD operations, database integration, and testing.
 
-## Stay in touch
+## Important Configuration Notes
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+# Application Database Configuration
+
+In app.module.ts, the database configuration is set for the main application. It's crucial to adjust these settings according to your development environment:
+
+```bash
+  $ const CONFIG_DATABASE: PostgresConnectionOptions = {
+  $  type: 'postgres',
+  $  host: 'localhost',
+  $  port: 5432,
+  $  username: 'postgres',
+  $  password: 'your_password',
+  $  database: 'automation-api-db',
+  $  entities: [__dirname + '/**/*.entity{.ts,.js}'],
+  $  synchronize: true,
+  $ };
+```
+
+Remember to replace 'your_password' with your actual PostgreSQL password.
+
+# Testing Database Configuration
+
+For end-to-end (E2E) tests, a separate database configuration is used to avoid interfering with the main application data. This configuration is located in automation.e2e-spec.ts:
+
+```bash
+  $ const DB_TESTING_CONFIG: PostgresConnectionOptions = {
+  $   type: 'postgres',
+  $   host: 'localhost',
+  $   port: 5432,
+  $   username: 'postgres',
+  $   password: 'your_password',
+  $   database: 'automation-api-test', // Use a separate test database
+  $   entities: [__dirname + '/../../src/**/*.entity{.ts,.js}'], // Adjusted path
+  $   synchronize: true,
+  $ };
+```
+
+Ensure that the test database (automation-api-test) exists and the credentials are correct. The synchronize: true option will automatically handle the schema creation for the test database.
+
+
+## How to Use
+
+- Creating an Automation: Send a POST request to /automation/create with the automation data.
+
+- Updating an Automation: Send a PUT request to /automation/update/critical-ratio/{id} with the updated data.
+
+- Deleting an Automation: Send a DELETE request to /automation/delete/{id}.
+
+- Fetching Automations: Send a GET request to /automation.
 
 ## License
 
