@@ -13,7 +13,6 @@ async function bootstrap() {
     .setTitle('Automation API')
     .setDescription('The automation API description')
     .setVersion('1.0')
-    .addTag('automation')
     .build();
 
   // Generating documentation with  the application and the configuration
