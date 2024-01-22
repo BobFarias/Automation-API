@@ -41,6 +41,8 @@ export class AutomationController {
     return await this.automationService.findAll(query);
   }
 
+  // HTTP Request to POST to create a new automation
+  // Body necessary according to the CreateAutomationDto.
   @Post('/create')
   @ApiOperation({ summary: 'Create a new automation' })
   @ApiResponse({
