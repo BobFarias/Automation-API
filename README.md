@@ -49,7 +49,7 @@ $ npm run test:cov
 
 This project is configured with Swagger to provide interactive API documentation. Swagger offers a convenient way to explore and test the various endpoints of the application.
 
-# How to Access the Swagger UI
+### How to Access the Swagger UI
 
 Once the application is running, you can access the Swagger UI by navigating to the following URL in your web browser:
 
