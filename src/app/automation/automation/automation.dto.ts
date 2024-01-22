@@ -14,7 +14,7 @@ export const MOCK_AUTOMATION = {
   name: 'Test Automation',
   environmentId: 1,
   criticalRatio: 0.5,
-  criticality: 0.3,
+  criticality: 8,
 };
 
 export interface IAutomationDTO {
