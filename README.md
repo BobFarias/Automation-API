@@ -56,16 +56,16 @@ This application was developed as part of a code challenge, which required the i
 In app.module.ts, the database configuration is set for the main application. It's crucial to adjust these settings according to your development environment:
 
 ```bash
-  $ const CONFIG_DATABASE: PostgresConnectionOptions = {
-  $  type: 'postgres',
-  $  host: 'localhost',
-  $  port: 5432,
-  $  username: 'postgres',
-  $  password: 'your_password',
-  $  database: 'automation-api-db',
-  $  entities: [__dirname + '/**/*.entity{.ts,.js}'],
-  $  synchronize: true,
-  $ };
+   const CONFIG_DATABASE: PostgresConnectionOptions = {
+    type: 'postgres',
+    host: 'localhost',
+    port: 5432,
+    username: 'postgres',
+    password: 'your_password',
+    database: 'automation-api-db',
+    entities: [__dirname + '/**/*.entity{.ts,.js}'],
+    synchronize: true,
+   };
 ```
 
 Remember to replace 'your_password' with your actual PostgreSQL password.
@@ -75,20 +75,19 @@ Remember to replace 'your_password' with your actual PostgreSQL password.
 For end-to-end (E2E) tests, a separate database configuration is used to avoid interfering with the main application data. This configuration is located in automation.e2e-spec.ts:
 
 ```bash
-  $ const DB_TESTING_CONFIG: PostgresConnectionOptions = {
-  $   type: 'postgres',
-  $   host: 'localhost',
-  $   port: 5432,
-  $   username: 'postgres',
-  $   password: 'your_password',
-  $   database: 'automation-api-test', // Use a separate test database
-  $   entities: [__dirname + '/../../src/**/*.entity{.ts,.js}'], // Adjusted path
-  $   synchronize: true,
-  $ };
+ const DB_TESTING_CONFIG: PostgresConnectionOptions = {
+   type: 'postgres',
+   host: 'localhost',
+   port: 5432,
+   username: 'postgres',
+   password: 'your_password',
+   database: 'automation-api-test', // Use a separate test database
+   entities: [__dirname + '/../../src/**/*.entity{.ts,.js}'], // Adjusted path
+   synchronize: true,
+ };
 ```
 
 Ensure that the test database (automation-api-test) exists and the credentials are correct. The synchronize: true option will automatically handle the schema creation for the test database.
-
 
 ## How to Use
 
