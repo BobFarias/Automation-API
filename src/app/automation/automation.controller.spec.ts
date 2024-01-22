@@ -74,6 +74,32 @@ describe('AutomationController', () => {
     expect(mockAutomationService.findAll).toHaveBeenCalledWith(queryOptions);
   });
 
+  it('should return an empty array with it is filtering with an unknown environmentId', async () => {
+    const listAutomationsSameEnvId = [
+      { ...MOCK_AUTOMATION, automationId: 1, environmentId: 5 },
+      { ...MOCK_AUTOMATION, automationId: 2, environmentId: 5 },
+      { ...MOCK_AUTOMATION, automationId: 3, environmentId: 5 },
+      { ...MOCK_AUTOMATION, automationId: 4, environmentId: 5 },
+    ];
+
+    // Mocking the tests with an unknown env ID
+    mockAutomationService.findAll.mockImplementation((query) => {
+      if (query.environmentId === 90) {
+        return Promise.resolve([]);
+      } else {
+        return Promise.resolve(listAutomationsSameEnvId);
+      }
+    });
+
+    const queryOptions = { environmentId: 90 };
+    const result = await controller.findAll(queryOptions);
+
+    // Expecting the result need to be equal an emtpy Array because no result was found.
+    expect(result).toEqual([]);
+    // Making sure that the filter with a specific env number have been called
+    expect(mockAutomationService.findAll).toHaveBeenCalledWith(queryOptions);
+  });
+
   it('should return an array of all the automations in asc order', async () => {
     const mockListAutomations = [
       { ...MOCK_AUTOMATION },
