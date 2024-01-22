@@ -12,6 +12,9 @@ export class AutomationService {
     private automationRepository: Repository<AutomationEntity>,
   ) {}
 
+  // Sorting: Ascending or descending order based on automation ID.
+  // Filtering: Based on environment ID.
+  // Based on the queryOptions
   async findAll(queries?: QueryOptions): Promise<AutomationEntity[]> {
     let filterOptions = {};
 
@@ -36,6 +39,7 @@ export class AutomationService {
   }
 
   // Creating a new automation record
+  // Maps the DTO to an entity and saves it to the database.
   async create(
     createAutomationDto: CreateAutomationDto,
   ): Promise<AutomationEntity> {
@@ -64,6 +68,7 @@ export class AutomationService {
   }
 
   // Updating the critical ratio of a specific
+  // Finds the automation by ID and updates its criticalRatio.
   async updateCriticalRatio(
     automationId: number,
     criticalRatio: number,
