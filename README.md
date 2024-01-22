@@ -2,21 +2,21 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
-## Project Description
-
-This project is built using the [Nest](https://github.com/nestjs/nest) framework with TypeScript, tailored for a specific code challenge. It demonstrates an efficient and scalable approach to building server-side applications, focusing on creating and managing 'Automations'.
-
 ## Table of Contents
 - [Project Description](#project-description)
 - [Installation](#installation)
 - [Running the App](#running-the-app)
-- ...
 - [Swagger API Documentation](#swagger-api-documentation)
 - [Code Challenge Overview](#code-challenge-overview)
 - [Important Configuration Notes](#important-configuration-notes)
 - [How to Use](#how-to-use)
 - [Contributions and Feedback](#contributions-and-feedback)
 - [License](#license)
+
+## Project Description
+
+This project is built using the [Nest](https://github.com/nestjs/nest) framework with TypeScript, tailored for a specific code challenge. It demonstrates an efficient and scalable approach to building server-side applications, focusing on creating and managing 'Automations'.
+
 
 ### Key Features
 
